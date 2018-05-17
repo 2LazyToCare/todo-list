@@ -9,7 +9,6 @@ export const getFetch = (url, method, body) => {
     })
       .then(response => {
         if (!response.ok) {
-          console.log("Network failure");
         }
         return response;
       })
