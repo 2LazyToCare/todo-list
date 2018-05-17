@@ -6,47 +6,40 @@ import FaPlusCircle from "react-icons/lib/fa/plus-circle";
 export default class CreateTodo extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       error: null
     };
-    
     this.input = "";
-  }
+  };
 
   renderError() {
-    if (!this.state.error) {
-      return null;
-    }
-
-    return <div style={{ color: "red" }}>{this.state.error}</div>;
-  }
+    const error = !this.state.error ? null : (
+      <div style={{ color: "red" }}>{this.state.error}</div>
+    );
+    return error;
+  };
+  
+  validateInput(task) {
+    const errorMessages = !task
+      ? "Por favor introduzir uma tarefa."
+      : this.props.todos.find(todo => todo.task === task)
+        ? "Tarefa já existe."
+        : null;
+    return errorMessages;
+  };
 
   handleCreate = event => {
     event.preventDefault();
-
     const task = this.input.value;
     const validateInput = this.validateInput(task);
-
     if (validateInput) {
       this.setState({ error: validateInput });
       return;
     }
-
     this.setState({ error: null });
     this.props.createTask(task);
     this.input.value = "";.
   };
-
-  validateInput(task) {
-    if (!task) {
-      return "Por favor introduzir uma tarefa.";
-    } else if (this.props.todos.find(todo => todo.task === task)) {
-      return "Tarefa já existe.";
-    } else {
-      return null;
-    }
-  }
 
   render() {
     return (
