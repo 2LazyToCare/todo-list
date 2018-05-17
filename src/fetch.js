@@ -6,11 +6,5 @@ export const getFetch = (url, method, body) => {
       headers: {
         "Content-Type": "application/json"
       }
-    })
-      .then(response => {
-        if (!response.ok) {
-        }
-        return response;
-      })
-      .then(response => response.json());
-  };
+    }).then(response => response.json());
+};
