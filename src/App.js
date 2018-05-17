@@ -23,11 +23,8 @@ export default class App extends React.Component {
 
   index() {
     const lastTodo = this.state.todos[this.state.todos.length - 1];
-    if (this.state.todos.length > 0) {
-      return lastTodo.key + 1;
-    } else {
-      return 1;
-    }
+    const id = this.state.todos.length > 0 ? lastTodo.key + 1 : 1;
+    return id;
   };
 
   createTask = task => {
