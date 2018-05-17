@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import TodosListHeader from "./todos-list-header";
 import TodosListItem from "./todos-list-item";
 import TodosListClear from "./todos-list-clear"
@@ -32,4 +33,9 @@ export default class TodosList extends React.Component {
       </table>
     );
   }
+}
+
+TodosList.propTypes = {
+  todos: PropTypes.array,
+  filter: PropTypes.string
 }
