@@ -5,17 +5,18 @@ import "./TodoList.css";
 
 export default class TodosListHeader extends React.Component {
   render() {
+    const style = filter =>
+      this.props.filter === filter
+        ? { color: "black", pointerEvents: "none" }
+        : null;
+    
     return (
       <thead className="sub0">
         <tr className="sub1">
           <th className="sub2">
             <Link
               className="all"
-              style={
-                this.props.filter === "all"
-                  ? { color: "black", pointerEvents: "none" }
-                  : null
-              }
+              style={style("all")}
               onClick={() => this.props.filterTodos("all")}
               to="/app/all"
             >
@@ -23,11 +24,7 @@ export default class TodosListHeader extends React.Component {
             </Link>
             <Link
               className="active"
-              style={
-                this.props.filter === "active"
-                  ? { color: "black", pointerEvents: "none" }
-                  : null
-              }
+              style={style("active")}
               onClick={() => this.props.filterTodos("active")}
               to="/app/active"
             >
@@ -35,11 +32,7 @@ export default class TodosListHeader extends React.Component {
             </Link>
             <Link
               className="completed"
-              style={
-                this.props.filter === "completed"
-                  ? { color: "black", pointerEvents: "none" }
-                  : null
-              }
+              style={style("completed")}
               onClick={() => this.props.filterTodos("completed")}
               to="/app/completed"
             >
