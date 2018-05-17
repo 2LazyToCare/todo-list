@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import "./Menu.css";
+import PropTypes from 'prop-types';
 import { withRouter } from "react-router-dom";
+import "./Menu.css";
 
 class Menu extends Component {
   nextPath(path) {
@@ -25,3 +26,7 @@ class Menu extends Component {
 }
 
 export default withRouter(Menu);
+
+Menu.propTypes = {
+  history: PropTypes.object
+}
