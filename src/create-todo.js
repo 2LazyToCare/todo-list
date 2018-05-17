@@ -10,14 +10,14 @@ export default class CreateTodo extends React.Component {
       error: null
     };
     this.input = "";
-  };
+  }
 
   renderError() {
     const error = !this.state.error ? null : (
       <div style={{ color: "red" }}>{this.state.error}</div>
     );
     return error;
-  };
+  }
   
   validateInput(task) {
     const errorMessages = !task
@@ -26,7 +26,7 @@ export default class CreateTodo extends React.Component {
         ? "Tarefa já existe."
         : null;
     return errorMessages;
-  };
+  }
 
   handleCreate = event => {
     event.preventDefault();
