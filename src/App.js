@@ -3,25 +3,22 @@ import { Link } from "react-router-dom";
 import "./TodoList.css";
 import CreateTodo from "./create-todo";
 import TodosList from "./todos-list";
+import { getFetch } from "./fetch";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       todos: [],
       filter: "all"
     };
-
     this.apiUrl = "http://5af2d4d6cca5e20014bba456.mockapi.io/todos";
-  }
+  };
 
   componentDidMount = () => {
-    fetch(this.apiUrl)
-      .then(response => response.json())
-      .then(response => {
-        this.setState({ todos: response });
-      });
+    getFetch(this.apiUrl).then(response => {
+      this.setState({ todos: response });
+    });
   };
 
   index() {
@@ -31,42 +28,29 @@ export default class App extends React.Component {
     } else {
       return 1;
     }
-  }
+  };
 
   createTask = task => {
-    fetch(this.apiUrl, {
-      method: "POST",
-      mode: "CORS",
-      body: JSON.stringify({
-        task,
-        key: this.index(),
-        isCompleted: false
-      }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => response.json())
-      .then(response => {
-        this.state.todos.push(response);
-        this.setState({ todos: this.state.todos });
-      });
+    const body = JSON.stringify({
+      task,
+      key: this.index(),
+      isCompleted: false
+    });
+    getFetch(this.apiUrl, "POST", body).then(response => {
+      this.state.todos.push(response);
+      this.setState({ todos: this.state.todos });
+    });
   };
 
   toggleTask = todo => {
     const toggleItems = this.state.todos.map(
       t => (t.key === todo.key ? { ...t, isCompleted: !t.isCompleted } : t)
     );
-
-    fetch(this.apiUrl + "/" + todo.key, {
-      method: "PUT",
-      body: JSON.stringify({
-        isCompleted: !todo.isCompleted
-      }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(() => {
+    const body = JSON.stringify({
+      isCompleted: !todo.isCompleted
+    });
+    const url = this.apiUrl + "/" + todo.key;
+    getFetch(url, "PUT", body).then(() => {
       this.setState({
         todos: toggleItems
       });
@@ -82,23 +66,16 @@ export default class App extends React.Component {
           ? { ...t, task: value, isCompleted: false }
           : t
     );
-
     const validateTask =
       value.length > 0 && !this.state.todos.find(tt => tt.task === value);
-
     const validateStatus = this.state.todos.task !== value;
-
+    const url = this.apiUrl + "/" + todo.key;
+    const body = JSON.stringify({
+      task: value,
+      isCompleted: false
+    });
     if (validateStatus && validateTask) {
-      fetch(this.apiUrl + "/" + todo.key, {
-        method: "PUT",
-        body: JSON.stringify({
-          task: value,
-          isCompleted: false
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }).then(() => {
+      getFetch(url, "PUT", body).then(() => {
         this.setState({
           todos: savedItems
         });
@@ -108,10 +85,8 @@ export default class App extends React.Component {
 
   deleteTask = key => {
     const filteredItems = this.state.todos.filter(todo => todo.key !== key);
-
-    fetch(this.apiUrl + "/" + key, {
-      method: "DELETE"
-    }).then(() => {
+    const url = this.apiUrl + "/" + key;
+    getFetch(url, "DELETE").then(() => {
       this.setState({
         todos: filteredItems
       });
@@ -120,14 +95,10 @@ export default class App extends React.Component {
 
   clearComplete = () => {
     const remainingTasks = this.state.todos.filter(todo => !todo.isCompleted);
-
     const completedTodos = this.state.todos.filter(todo => todo.isCompleted);
-
     Promise.all(
       completedTodos.map(todo =>
-        fetch(this.apiUrl + "/" + todo.key, {
-          method: "DELETE"
-        })
+        getFetch(this.apiUrl + "/" + todo.key, "DELETE")
       )
     ).then(() => {
       this.setState({
