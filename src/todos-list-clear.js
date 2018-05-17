@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import "./TodoList.css";
 
 export default class TodosListClear extends React.Component {
@@ -18,4 +19,10 @@ export default class TodosListClear extends React.Component {
   render() {
     return <tfoot className="footer">{this.hideClear()}</tfoot>;
   }
+}
+
+TodosListClear.propTypes = {
+  todos: PropTypes.array,
+  filter: PropTypes.string,
+  clearComplete: PropTypes.func
 }
