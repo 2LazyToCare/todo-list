@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import "./TodoList.css";
 import FaPlusCircle from "react-icons/lib/fa/plus-circle";
 
@@ -9,6 +10,8 @@ export default class CreateTodo extends React.Component {
     this.state = {
       error: null
     };
+    
+    this.input = "";
   }
 
   renderError() {
@@ -22,8 +25,7 @@ export default class CreateTodo extends React.Component {
   handleCreate = event => {
     event.preventDefault();
 
-    const createInput = this.refs.createInput;
-    const task = createInput.value;
+    const task = this.input.value;
     const validateInput = this.validateInput(task);
 
     if (validateInput) {
@@ -33,7 +35,7 @@ export default class CreateTodo extends React.Component {
 
     this.setState({ error: null });
     this.props.createTask(task);
-    this.refs.createInput.value = ""; // Esvazia o form depois de uma tarefa ser adicionada.
+    this.input.value = "";.
   };
 
   validateInput(task) {
@@ -53,7 +55,9 @@ export default class CreateTodo extends React.Component {
           <input
             type="text"
             placeholder="Introduzir tarefa"
-            ref="createInput"
+            ref={node => {
+              this.input = node;
+            }}
           />
           <button>
             <FaPlusCircle />
@@ -64,3 +68,8 @@ export default class CreateTodo extends React.Component {
     );
   }
 }
+
+createTodo.propTypes = {
+  createTask: PropTypes.func,
+  todos.PropTypes.array
+};
