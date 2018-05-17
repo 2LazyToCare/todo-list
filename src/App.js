@@ -4,25 +4,12 @@ import "./TodoList.css";
 import CreateTodo from "./create-todo";
 import TodosList from "./todos-list";
 
-// const todos = [
-//   {
-//     task: "Aprender React",
-//     key: 1,
-//     isCompleted: false
-//   },
-//   {
-//     task: "Tomar comprimidos",
-//     key: 2,
-//     isCompleted: true
-//   }
-// ];
-
 export default class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      todos: [], // Array vazio.
+      todos: [],
       filter: "all"
     };
 
@@ -64,14 +51,6 @@ export default class App extends React.Component {
         this.state.todos.push(response);
         this.setState({ todos: this.state.todos });
       });
-
-    // this.state.todos.push({
-    //   // push acrescenta, desde caso propriedades, no fim de cada array.
-    //   task, // Tarefa vazia.
-    //   key: this.index(), // Key é definida pelo index.
-    //   isCompleted: false // isComplete utiliza um boolean.
-    // });
-    // this.setState({ todos: this.state.todos }); // Todas as propriedades passaram para o estado/array em cima.
   };
 
   toggleTask = todo => {
@@ -92,13 +71,6 @@ export default class App extends React.Component {
         todos: toggleItems
       });
     });
-
-    // this.setState(state => ({
-    //   todos: state.todos.map(
-    //     // .map() constrói um novo array com as mudanças implementadas em cada elemento.
-    //     t => (t.key === todo.key ? { ...t, isCompleted: !t.isCompleted } : t) // se dois items têm a mesma key então isCompleted troca para o oposto do valor que apresentava (true para false, false para true), senão nada.
-    //   )
-    // }));
   };
 
   saveTask = (todo, value) => {
@@ -132,21 +104,10 @@ export default class App extends React.Component {
         });
       });
     }
-
-    // this.setState(state => ({
-    //   todos: state.todos.map(
-    //     t =>
-    //       t.key === todo.key &&
-    //       value.length > 0 &&
-    //       !this.state.todos.find(tt => tt.task === value)
-    //         ? { ...t, task: value }
-    //         : t // se dois items apresentam a mesma key e o novo valor não está vazio ou é repetido, então a propriedade task muda para o novo conteúdo em value.
-    //   )
-    // }));
   };
 
   deleteTask = key => {
-    const filteredItems = this.state.todos.filter(todo => todo.key !== key); // .filter() passa apenas os elementos que passam a função. Passamos a key do item selecionado e verificamos essa key com todos os outros que estão armazenados aqui.
+    const filteredItems = this.state.todos.filter(todo => todo.key !== key);
 
     fetch(this.apiUrl + "/" + key, {
       method: "DELETE"
