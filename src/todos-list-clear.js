@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import "./TodoList.css";
+import "./CSS/TodoList.css";
 
 export default class TodosListClear extends React.Component {
   hideClear() {
