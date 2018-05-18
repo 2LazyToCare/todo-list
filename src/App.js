@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./TodoList.css";
+import "./CSS/TodoList.css";
 import CreateTodo from "./create-todo";
 import TodosList from "./todos-list";
 import { getFetch } from "./fetch";
