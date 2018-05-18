@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import TodosListHeader from "./todos-list-header";
 import TodosListItem from "./todos-list-item";
 import TodosListClear from "./todos-list-clear"
-import "./TodoList.css";
+import "./CSS/TodoList.css";
 
 export default class TodosList extends React.Component {
   renderItems = (todo) => {
@@ -13,18 +13,15 @@ export default class TodosList extends React.Component {
   render() {
     const todoEntries = this.props.todos;
     const todoFilters = this.props.filter;
-
-    const filteredItems = todoEntries.filter(todo => {
-      if (todoFilters === "completed") {
-        return todo.isCompleted;
-      } else if (todoFilters === "active") {
-        return !todo.isCompleted;
-      } else {
-        return todo;
-      }
-    });
+    const filteredItems = todoEntries.filter(
+      todo =>
+        todoFilters === "completed"
+          ? todo.isCompleted
+          : todoFilters === "active"
+            ? !todo.isCompleted
+            : todo
+    );
     const listItems = filteredItems.map(this.renderItems);
-
     return (
       <table className="table">
         <TodosListHeader {...this.props} />
