@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./TodoList.css";
+import "./CSS/TodoList.css";
 import Certo from "react-icons/lib/fa/check-square-o";
 import Quadrado from "react-icons/lib/fa/square-o";
 import Apagar from "react-icons/lib/fa/trash-o";
