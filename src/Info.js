@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Info.css";
+import "./CSS/Info.css";
 
 export default class Info extends React.Component {
   render() {
