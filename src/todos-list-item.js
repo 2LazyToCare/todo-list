@@ -11,7 +11,6 @@ import Editar from "react-icons/lib/fa/pencil";
 export default class TodosListItem extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isEditing: false,
       value: this.props.todo.task,
@@ -37,33 +36,28 @@ export default class TodosListItem extends React.Component {
   };
 
   validateEdit = value => {
-    if (value.length === 0) {
-      return "Tarefa não pode estar vazia.";
-    } else if (this.props.todos.find(todo => todo.task === value)) {
-      return "Tarefa já existe.";
-    } else {
-      return null;
-    }
+    const editErrors =
+      value.length === 0
+        ? "Tarefa não pode estar vazia."
+        : this.props.todos.find(todo => todo.task === value)
+          ? "Tarefa já existe."
+          : null;
+    return editErrors;
   };
 
   renderError() {
-    if (!this.state.error) {
-      return null;
-    }
-
-    return <div style={{ color: "red" }}>{this.state.error}</div>;
+    const error = !this.state.error ? null : (
+      <div style={{ color: "red" }}>{this.state.error}</div>
+    );
+    return error;
   }
 
   onSaveClick = event => {
     event.preventDefault();
-
     const oldTask = this.props.todo;
     const newTask = this.state.value;
-
     const validateTask = this.validateEdit(newTask);
-
     this.props.saveTask(oldTask, newTask);
-
     if (this.props.todo.task !== newTask && validateTask) {
       this.setState({
         isEditing: true,
@@ -112,12 +106,10 @@ export default class TodosListItem extends React.Component {
 
   renderTaskSection() {
     const { task, isCompleted } = this.props.todo;
-
     const taskStyle = {
       color: isCompleted ? "green" : "red",
       cursor: "pointer"
     };
-
     if (this.state.isEditing) {
       return (
         <td>
